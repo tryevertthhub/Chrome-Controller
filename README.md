@@ -20,3 +20,9 @@ This is used to auto open and close 144 profiles to web scrapping.
 Every profile runs until 20 minutes, and after 20 minutes, auto close and open new profile automatically.
 
 
+## How to build project?
+
+- First, install Visual Studio 2022.
+- And, Open Project in IDE, and click Build button.
+  
+

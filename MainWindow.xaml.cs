@@ -34,7 +34,25 @@ namespace ChromeController
            
         }
 
-        
+        private void SwitchAccount(string account)
+        {
+            currentIndex++;
+            string chromePath = @"C:\Users\Administrator\AppData\Local\Google\Chrome\Application\chrome.exe";
+
+            string profilePath = @"C:\Users\Administrator\AppData\Local\Google\Chrome\User Data";
+         
+            ProcessStartInfo startInfo = new ProcessStartInfo(chromePath);
+            startInfo.Arguments = $"--user-data-dir=\"{profilePath}\" --profile-directory=\"{account}\"";
+            try
+            {
+                Process chromeProcess = Process.Start(startInfo);
+                timer.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+        }
     }
 }
 

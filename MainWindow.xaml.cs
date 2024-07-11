@@ -53,6 +53,57 @@ namespace ChromeController
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
         }
+                private async void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        if (this.Frontend.Content.ToString() == "Frontend Server Start")
+            {
+                string projectPath = @"C:\Users\Administrator\Documents\Server\frontend";
+                string command = "npm run dev";
+
+                ProcessStartInfo startInfo = new ProcessStartInfo("cmd.exe", $"/c cd /d {projectPath} && {command}");
+                startInfo.RedirectStandardOutput = true;
+                startInfo.UseShellExecute = false;
+
+                FrontendProcess = new Process();
+                FrontendProcess.StartInfo = startInfo;
+
+                StringBuilder outputBuilder = new StringBuilder();
+
+                FrontendProcess.OutputDataReceived += (s, eventArgs) =>
+                {
+                    if (!string.IsNullOrEmpty(eventArgs.Data))
+                    {
+                        string output = eventArgs.Data;
+                        output = ModifyOutputFormat(output);
+
+                        // Update the UI with the output
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            outputBuilder.AppendLine(output);
+                            this.Output.Text = outputBuilder.ToString();
+                            Console.WriteLine(output);
+                        });
+                    }
+                };
+
+                FrontendProcess.Start();
+                this.Frontend.Content = "Stop";
+                FrontendProcess.BeginOutputReadLine();
+
+                await Task.Run(() =>
+                {
+                    FrontendProcess.WaitForExit();
+                });
+            }
+        else
+            {
+                StopFrontend();
+            }
+           
+
+            
+        }
     }
 }
 

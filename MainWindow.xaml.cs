@@ -33,7 +33,21 @@ namespace ChromeController
             InitializeComponent();
            
         }
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SwitchAccount(_accounts[currentIndex]);
+        }
+        private void StopFrontend()
+        {
+            if (FrontendProcess != null && !FrontendProcess.HasExited)
+            {
+                FrontendProcess.Kill();
+               
+                FrontendProcess.Dispose();
+                FrontendProcess = null;
+                this.Frontend.Content = "Frontend Server Start";
+            }
+        }
         private void SwitchAccount(string account)
         {
             currentIndex++;

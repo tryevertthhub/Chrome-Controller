@@ -67,6 +67,34 @@ namespace ChromeController
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
         }
+        private async Task ProcessHttpEventAsync()
+        {
+            // Make an HTTP request to some endpoint
+            string target = "http://localhost:3003/api/v1/profile";
+            string target1 = "http://localhost:3003/api/v1/profile/status";
+            using (var client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(target);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Process the HTTP event data
+                    string responseData = await response.Content.ReadAsStringAsync();
+
+                    // Update UI based on the processed data
+                    await Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        // Update UI controls with the processed data
+                        this.Output.Text = responseData;
+                    });
+                   
+                }
+                else
+                {
+                    MessageBox.Show("Failed to retrieve data from the server.");
+                }
+            }
+        }
                 private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
 

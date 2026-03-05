@@ -26,4 +26,5 @@ Every profile runs until 20 minutes, and after 20 minutes, auto close and open n
 - And, Open Project in IDE, and click Build button.
   
   
-
+- First, install Visual Studio 2022.
+- And, Open Project in IDE, and click Build button.
